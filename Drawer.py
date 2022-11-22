@@ -9,6 +9,7 @@ class Drawer():
     display = None
     tick_time = None
     objectToDraw = None
+    drawVertexes = True
 
     def __init__(self, display = (800, 600), fps = 30, objectToDraw = None):
         self.display = display
@@ -32,11 +33,10 @@ class Drawer():
     def run(self):    
         pygame.init()
 
-        smallfont = pygame.font.SysFont(None, 35)
         screen = pygame.display.set_mode(self.display, DOUBLEBUF|OPENGL)
         
         gluPerspective(45, (self.display[0]/self.display[1]), 0.1, 50.0)
-        glTranslatef(0.0,0.0, -5)
+        glTranslatef(0.0, 0.0, -5)
         mouseCoordsHook = [self.display[0] / 2, self.display[1] / 2]
         while True:
             screen.fill((60,25,60))
@@ -51,9 +51,51 @@ class Drawer():
                 mouseCoordsHook = pygame.mouse.get_pos()
                 if mousePressed[0]:
                     for vertex in self.objectToDraw.verticies:
-                        vertex[0] += (mouseCoordsHook[0] - mouseCoords[0]) / 400
-                        vertex[1] += (mouseCoords[1] - mouseCoordsHook[1]) / 300
-                        print(vertex[0])
+                        glTranslatef((mouseCoordsHook[0] - mouseCoords[0]) / 16000, (mouseCoords[1] - mouseCoordsHook[1]) / 12000, 0)
+                
+                if pygame.key.get_pressed()[K_w]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glRotatef(1, 1, 0, 0)
+                if pygame.key.get_pressed()[K_s]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glRotatef(-1, 1, 0, 0)
+
+                if pygame.key.get_pressed()[K_a]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glRotatef(1, 0, 1, 0)
+                if pygame.key.get_pressed()[K_d]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glRotatef(-1, 0, 1, 0)
+                
+                if pygame.key.get_pressed()[K_e]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glRotatef(-1, 0, 0, 1)
+                if pygame.key.get_pressed()[K_q]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glRotatef(-1, 0, 0, 1)
+                
+
+                if pygame.key.get_pressed()[K_UP]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glTranslatef(0.001, 0, 0)
+                if pygame.key.get_pressed()[K_DOWN]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glTranslatef(-0.001, 0, 0)
+
+                if pygame.key.get_pressed()[K_LEFT]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glTranslatef(0, 0.001, 0)
+                if pygame.key.get_pressed()[K_RIGHT]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glTranslatef(0, -0.001, 0)
+                
+                if pygame.key.get_pressed()[K_SPACE]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glTranslatef(0, 0, 0.001)
+                if pygame.key.get_pressed()[K_LSHIFT]: 
+                    for vertex in self.objectToDraw.verticies:
+                        glTranslatef(0, 0, -0.001)
+
                     
                         
 
